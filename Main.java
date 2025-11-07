@@ -22,12 +22,12 @@ public class Main {
 }
 
 class PBEWithHmacSHA256AndAES128_Cipher {
-	private static final int BLOCK_LEN = 16; 					                  // for AES
-	private static final int SALT_LEN = 8; 						                  // 16 may be a better choice
-	private static final int IV_LEN = BLOCK_LEN; 				                // for AES-CBC
+	private static final int BLOCK_LEN = 16; 					  		// for AES
+	private static final int SALT_LEN = 8; 						       	// 16 may be a better choice
+	private static final int IV_LEN = BLOCK_LEN; 				       	// for AES-CBC
 	private static final int SALT_IV_LEN = SALT_LEN + IV_LEN;
-	private static final int ITER = 20; 						                    // far to low (choose as high as possible while maintaining acceptable performance, typical values a few 10,000 to 100,000)
-    private static final String ALGO = "PBEWithHmacSHA256AndAES_128"; // PBEWithHmacSHA512AndAES_256 can of course also be used as ALGO
+	private static final int ITER = 20; 						      	// far to low (choose as high as possible while maintaining acceptable performance, typical values a few 10,000 to 100,000)
+    private static final String ALGO = "PBEWithHmacSHA256AndAES_128"; 	// PBEWithHmacSHA512AndAES_256 can of course also be used as ALGO
     
     public static byte[] encrypt(final String password, final byte[] plaintext) throws Exception {
         var ivSaltCiphertext = new byte[SALT_IV_LEN + plaintext.length + (BLOCK_LEN - plaintext.length % BLOCK_LEN)]; // (...) is the PKCS#7 padding length 
