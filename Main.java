@@ -30,11 +30,11 @@ class PBEWithHmacSHA256AndAES128_Cipher {
     private static final String ALGO = "PBEWithHmacSHA256AndAES_128"; 	// PBEWithHmacSHA512AndAES_256 can of course also be used as ALGO
     
     public static byte[] encrypt(final String password, final byte[] plaintext) throws Exception {
-        var ivSaltCiphertext = new byte[SALT_IV_LEN + plaintext.length + (BLOCK_LEN - plaintext.length % BLOCK_LEN)]; // (...) is the PKCS#7 padding length 
+        var saltIvCiphertext = new byte[SALT_IV_LEN + plaintext.length + (BLOCK_LEN - plaintext.length % BLOCK_LEN)]; // (...) is the PKCS#7 padding length 
         var cipher = Cipher.getInstance(ALGO);
-       	init(password, cipher, Cipher.ENCRYPT_MODE, ivSaltCiphertext);
-        cipher.doFinal(plaintext, 0, plaintext.length, ivSaltCiphertext, SALT_IV_LEN);
-        return ivSaltCiphertext; 
+       	init(password, cipher, Cipher.ENCRYPT_MODE, saltIvCiphertext);
+        cipher.doFinal(plaintext, 0, plaintext.length, saltIvCiphertext, SALT_IV_LEN);
+        return saltIvCiphertext; 
     }
 
     public static byte[] decrypt(final String password, final byte[] saltIvCipherText) throws Exception {
