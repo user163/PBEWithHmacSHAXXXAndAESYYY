@@ -1,2 +1,2 @@
 # PBEWithHmacSHAXXXAndAESYYY
-Encryption/Decryption with PBEWithHmacSHAXXXAndAESYYY
+Implementation of encryption/decryption with PBEWithHmacSHAXXXAndAESYYY
