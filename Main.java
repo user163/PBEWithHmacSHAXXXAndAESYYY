@@ -50,7 +50,7 @@ class PBEWithHmacSHA256AndAES128_Cipher {
     	    saltIv = new byte[SALT_IV_LEN]; 
     	    random.nextBytes(saltIv);
     	    System.arraycopy(saltIv, 0, saltIvCiphertext, 0, SALT_IV_LEN);
-     	} else { 
+     	} else { // Cipher.DECRYPT_MODE
     	    saltIv = Arrays.copyOfRange(saltIvCiphertext, 0, SALT_IV_LEN);  
      	}
     	var pbeParamSpec = new PBEParameterSpec(Arrays.copyOfRange(saltIv, 0, SALT_LEN), ITER, new IvParameterSpec(Arrays.copyOfRange(saltIv, SALT_LEN, SALT_IV_LEN)));
