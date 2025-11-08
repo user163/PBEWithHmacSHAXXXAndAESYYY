@@ -44,16 +44,12 @@ class PBEWithHmacSHA256AndAES128_Cipher {
     }
     
     private static void init(String password, Cipher cipher, int mode, byte[] saltIvCiphertext) throws Exception {
-    	byte[] saltIv;
     	if (mode == Cipher.ENCRYPT_MODE) { 
-    		var random = new SecureRandom();
-    	    saltIv = new byte[SALT_IV_LEN]; 
-    	    random.nextBytes(saltIv);
+    	    byte[] saltIv = new byte[SALT_IV_LEN]; 
+    	    new SecureRandom().nextBytes(saltIv);
     	    System.arraycopy(saltIv, 0, saltIvCiphertext, 0, SALT_IV_LEN);
-     	} else { // Cipher.DECRYPT_MODE
-    	    saltIv = Arrays.copyOfRange(saltIvCiphertext, 0, SALT_IV_LEN);  
-     	}
-    	var pbeParamSpec = new PBEParameterSpec(Arrays.copyOfRange(saltIv, 0, SALT_LEN), ITER, new IvParameterSpec(Arrays.copyOfRange(saltIv, SALT_LEN, SALT_IV_LEN)));
+     	} 
+    	var pbeParamSpec = new PBEParameterSpec(Arrays.copyOfRange(saltIvCiphertext, 0, SALT_LEN), ITER, new IvParameterSpec(Arrays.copyOfRange(saltIvCiphertext, SALT_LEN, SALT_IV_LEN)));
         var pbeKey = SecretKeyFactory.getInstance(ALGO).generateSecret(new PBEKeySpec(password.toCharArray()));        
         cipher.init(mode, pbeKey, pbeParamSpec);
     }
